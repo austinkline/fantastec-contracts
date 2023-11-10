@@ -1,0 +1,79 @@
+{
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testing": "127.0.0.1:3569",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "300ca889ca42fc15edf98182cf2edb8000305085c485ccefd555e902114f8010"
+    },
+    "emulator-ft": {
+      "address": "ee82856bf20e2aa6",
+      "key": "300ca889ca42fc15edf98182cf2edb8000305085c485ccefd555e902114f8010"
+    }
+  },
+  "contracts": {
+    "FantastecSwapDataV2": "./contracts/FantastecSwapDataV2.cdc",
+    "FantastecSwapDataProperties": "./contracts/FantastecSwapDataProperties.cdc",
+    "FantastecNFT": "./contracts/FantastecNFT.cdc",
+    "IFantastecPackNFT": "./contracts/IFantastecPackNFT.cdc",
+    "FUSD": {
+      "source": "./contracts/FUSD.cdc",
+      "aliases": {
+        "mainnet": "0x3c5959b568896393"
+      }
+    },
+    "ViewResolver": {
+      "source": "./node_modules/@flowtyio/flow-contracts/contracts/ViewResolver.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x1d7e57aa55817448"
+      }
+    },
+    "FungibleToken": {
+      "source": "./node_modules/@flowtyio/flow-contracts/contracts/FungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xee82856bf20e2aa6",
+        "testnet": "0x9a0766d93b6608b7",
+        "mainnet": "0xf233dcee88fe0abe"
+      }
+    },
+    "NonFungibleToken": {
+      "source": "./node_modules/@flowtyio/flow-contracts/contracts/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x1d7e57aa55817448"
+      }
+    },
+    "MetadataViews": {
+      "source": "./node_modules/@flowtyio/flow-contracts/contracts/MetadataViews.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x1d7e57aa55817448"
+      }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": [
+        "FUSD",
+        "ViewResolver",
+        "NonFungibleToken",
+        "MetadataViews",
+        "FantastecSwapDataV2",
+        "FantastecSwapDataProperties",
+        "FantastecNFT",
+        "IFantastecPackNFT"
+      ],
+      "emulator-ft": [
+        "FungibleToken"
+      ]
+    }
+  }
+}
