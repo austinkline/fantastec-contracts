@@ -5,7 +5,9 @@ import "MetadataViews"
 import "FantastecSwapDataV2"
 import "FantastecSwapDataProperties"
 
-pub contract FantastecNFT: NonFungibleToken {
+import "ViewResolver"
+
+pub contract FantastecNFT: NonFungibleToken, ViewResolver {
 
   // Events
   //
@@ -411,17 +413,7 @@ pub contract FantastecNFT: NonFungibleToken {
           return MetadataViews.ExternalURL("https://www.fantastec-swap.io/nft/view?id=".concat(self.id.toString()))
 
         case Type<MetadataViews.NFTCollectionData>():
-          return MetadataViews.NFTCollectionData(
-            storagePath: FantastecNFT.CollectionStoragePath,
-            publicPath: FantastecNFT.CollectionPublicPath,
-            providerPath: /private/FantastecNFTCollection,
-            publicCollection: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic}>(),
-            publicLinkedType: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic,NonFungibleToken.CollectionPublic,NonFungibleToken.Receiver,MetadataViews.ResolverCollection}>(),
-            providerLinkedType: Type<&FantastecNFT.Collection{NonFungibleToken.CollectionPublic, FantastecNFT.FantastecNFTCollectionPublic}>(),
-            createEmptyCollectionFunction: (fun (): @NonFungibleToken.Collection {
-                return <- FantastecNFT.createEmptyCollection()
-            })
-          )
+          return FantastecNFT.resolveView(Type<MetadataViews.NFTCollectionData>())
 
         case Type<MetadataViews.NFTCollectionDisplay>():
           let cardCollection = self.getCardCollection()
@@ -639,6 +631,44 @@ pub contract FantastecNFT: NonFungibleToken {
   pub fun getTotalSupply(): UInt64 {
     return FantastecNFT.totalSupply;
   }
+
+    /// Function that resolves a metadata view for this contract.
+    ///
+    /// @param view: The Type of the desired view.
+    /// @return A structure representing the requested view.
+    ///
+    pub fun resolveView(_ view: Type): AnyStruct? {
+        switch view {
+            case Type<MetadataViews.NFTCollectionData>():
+                return MetadataViews.NFTCollectionData(
+                    storagePath: FantastecNFT.CollectionStoragePath,
+                    publicPath: FantastecNFT.CollectionPublicPath,
+                    providerPath: /private/FantastecNFTCollection,
+                    publicCollection: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic}>(),
+                    publicLinkedType: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic,NonFungibleToken.CollectionPublic,NonFungibleToken.Receiver,MetadataViews.ResolverCollection}>(),
+                    providerLinkedType: Type<&FantastecNFT.Collection{NonFungibleToken.CollectionPublic, FantastecNFT.FantastecNFTCollectionPublic}>(),
+                    createEmptyCollectionFunction: (fun (): @NonFungibleToken.Collection {
+                        return <- FantastecNFT.createEmptyCollection()
+                    })
+                )
+            case Type<MetadataViews.NFTCollectionDisplay>():
+                // TODO: return NFTCollectionDisplay here
+                return nil
+        }
+        return nil
+    }
+
+    /// Function that returns all the Metadata Views implemented by a Non Fungible Token
+    ///
+    /// @return An array of Types defining the implemented views. This value will be used by
+    ///         developers to know which parameter to pass to the resolveView() method.
+    ///
+    pub fun getViews(): [Type] {
+        return [
+            Type<MetadataViews.NFTCollectionData>(),
+            Type<MetadataViews.NFTCollectionDisplay>()
+        ]
+    }
 
   init(){
     // Set our named paths

@@ -3,8 +3,9 @@ import "NonFungibleToken"
 import "FantastecNFT"
 import "IFantastecPackNFT"
 import "MetadataViews"
+import "ViewResolver"
 
-pub contract FantastecPackNFT: NonFungibleToken, IFantastecPackNFT {
+pub contract FantastecPackNFT: NonFungibleToken, IFantastecPackNFT, ViewResolver {
 
     pub var totalSupply: UInt64
     pub let CollectionStoragePath: StoragePath
@@ -179,6 +180,35 @@ pub contract FantastecPackNFT: NonFungibleToken, IFantastecPackNFT {
 
     pub fun createEmptyCollection(): @NonFungibleToken.Collection {
         return <- create Collection()
+    }
+
+    /// Function that resolves a metadata view for this contract.
+    ///
+    /// @param view: The Type of the desired view.
+    /// @return A structure representing the requested view.
+    ///
+    pub fun resolveView(_ view: Type): AnyStruct? {
+        switch view {
+            case Type<MetadataViews.NFTCollectionData>():
+                // TODO: return NFTCollectionData here
+                return nil
+            case Type<MetadataViews.NFTCollectionDisplay>():
+                // TODO: return NFTCollectionDisplay here
+                return nil
+        }
+        return nil
+    }
+
+    /// Function that returns all the Metadata Views implemented by a Non Fungible Token
+    ///
+    /// @return An array of Types defining the implemented views. This value will be used by
+    ///         developers to know which parameter to pass to the resolveView() method.
+    ///
+    pub fun getViews(): [Type] {
+        return [
+            Type<MetadataViews.NFTCollectionData>(),
+            Type<MetadataViews.NFTCollectionDisplay>()
+        ]
     }
 
     init(){

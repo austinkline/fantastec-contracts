@@ -20,6 +20,7 @@
     "FantastecSwapDataProperties": "./contracts/FantastecSwapDataProperties.cdc",
     "FantastecNFT": "./contracts/FantastecNFT.cdc",
     "IFantastecPackNFT": "./contracts/IFantastecPackNFT.cdc",
+    "FantastecPackNFT": "./contracts/FantastecPackNFT.cdc",
     "FUSD": {
       "source": "./contracts/FUSD.cdc",
       "aliases": {
@@ -69,7 +70,8 @@
         "FantastecSwapDataV2",
         "FantastecSwapDataProperties",
         "FantastecNFT",
-        "IFantastecPackNFT"
+        "IFantastecPackNFT",
+        "FantastecPackNFT"
       ],
       "emulator-ft": [
         "FungibleToken"
