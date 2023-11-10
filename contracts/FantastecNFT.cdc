@@ -646,7 +646,7 @@ pub contract FantastecNFT: NonFungibleToken, ViewResolver {
                     providerPath: /private/FantastecNFTCollection,
                     publicCollection: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic}>(),
                     publicLinkedType: Type<&FantastecNFT.Collection{FantastecNFT.FantastecNFTCollectionPublic,NonFungibleToken.CollectionPublic,NonFungibleToken.Receiver,MetadataViews.ResolverCollection}>(),
-                    providerLinkedType: Type<&FantastecNFT.Collection{NonFungibleToken.CollectionPublic, FantastecNFT.FantastecNFTCollectionPublic}>(),
+                    providerLinkedType: Type<&FantastecNFT.Collection{NonFungibleToken.CollectionPublic, FantastecNFT.FantastecNFTCollectionPublic,NonFungibleToken.Provider,MetadataViews.ResolverCollection}>(),
                     createEmptyCollectionFunction: (fun (): @NonFungibleToken.Collection {
                         return <- FantastecNFT.createEmptyCollection()
                     })
